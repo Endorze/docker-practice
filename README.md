@@ -1,56 +1,61 @@
-# Getting Started Todo App
+# Example to-do List Application
 
-This project provides a sample todo list application. It demonstrates all of
-the current Docker best practices, ranging from the Compose file, to the
-Dockerfile, to CI (using GitHub Actions), and running tests. It's intended to 
-be well-documented to ensure anyone can come in and easily learn.
+This repository is a simple to-do list manager that runs on Node.js.
 
-## Application architecture
+## Getting started
 
-![image](https://github.com/docker/getting-started-todo-app/assets/313480/c128b8e4-366f-4b6f-ad73-08e6652b7c4d)
+Download [Docker Desktop](https://www.docker.com/products/docker-desktop) for Mac or Windows. Docker Compose will be automatically installed. 
+On Linux, make sure you have the latest version of [Compose](https://docs.docker.com/compose/install/).
 
+## Clone the repository
 
-This sample application is a simple React frontend that receives data from a
-Node.js backend. 
-
-When the application is packaged and shipped, the frontend is compiled into
-static HTML, CSS, and JS and then bundled with the backend where it is then
-served as static assets. So no... there is no server-side rendering going on
-with this sample app.
-
-During development, since the backend and frontend need different dev tools, 
-they are split into two separate services. This allows [Vite](https://vitejs.dev/) 
-to manage the React app while [nodemon](https://nodemon.io/) works with the 
-backend. With containers, it's easy to separate the development needs!
-
-## Development
-
-To spin up the project, simply install Docker Desktop and then run the following 
-commands:
+Open a terminal and clone this sample application.
 
 ```
-git clone https://github.com/docker/getting-started-todo-app
-cd getting-started-todo-app
-docker compose up --watch
+ git clone https://github.com/dockersamples/todo-list-app
 ```
 
-You'll see several container images get downloaded from Docker Hub and, after a
-moment, the application will be up and running! No need to install or configure
-anything on your machine!
+## Run the app
 
-Simply open to [http://localhost](http://localhost) to see the app up and running!
-
-Any changes made to either the backend or frontend should be seen immediately
-without needing to rebuild or restart the containers.
-
-To help with the database, the development stack also includes phpMyAdmin, which
-can be accessed at [http://db.localhost](http://db.localhost) (most browsers will 
-resolve `*.localhost` correctly, so no hosts file changes should be required).
-
-### Tearing it down
-
-When you're done, simply remove the containers by running the following command:
+Navigate into the todo-list-app directory:
 
 ```
-docker compose down
+docker compose up -d --build
 ```
+
+When you run this command, you should see an output like this:
+
+```
+[+] Running 4/4
+✔ app 3 layers [⣿⣿⣿]      0B/0B            Pulled           7.1s
+  ✔ e6f4e57cc59e Download complete                          0.9s
+  ✔ df998480d81d Download complete                          1.0s
+  ✔ 31e174fedd23 Download complete                          2.5s
+[+] Running 2/4
+  ⠸ Network todo-list-app_default           Created         0.3s
+  ⠸ Volume "todo-list-app_todo-mysql-data"  Created         0.3s
+  ✔ Container todo-list-app-app-1           Started         0.3s
+  ✔ Container todo-list-app-mysql-1         Started         0.3s
+```
+
+## List the services
+
+```
+docker compose ps
+NAME                    IMAGE            COMMAND                  SERVICE   CREATED          STATUS          PORTS
+todo-list-app-app-1     node:18-alpine   "docker-entrypoint.s…"   app       24 seconds ago   Up 7 seconds    127.0.0.1:3000->3000/tcp
+todo-list-app-mysql-1   mysql:8.0        "docker-entrypoint.s…"   mysql     24 seconds ago   Up 23 seconds   3306/tcp, 33060/tcp
+```
+
+If you look at the Docker Desktop GUI, you can see the containers and dive deeper into their configuration.
+
+
+
+
+<img width="1330" alt="image" src="https://github.com/dockersamples/todo-list-app/assets/313480/d85a4bcf-e2c3-4917-9220-7d9b9a78dc54">
+
+
+## Access the app
+
+The to-do list app will be running at [http://localhost:3000](http://localhost:3000).
+
